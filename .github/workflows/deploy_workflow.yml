@@ -1,0 +1,48 @@
+name: Deploy to VPS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
+
+    - name: Clone or Pull Repository on VPS
+      env:
+        VPS_USER: admin1
+        VPS_HOST: 172.105.148.166
+        VPS_PATH: /home/admin1/var/www
+        REPO_URL: https://github.com/RHowland/web001
+      run: |
+        ssh ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
+        if [ ! -d \"${{ env.VPS_PATH }}/web001\" ]; then
+          git clone ${{ env.REPO_URL }} ${{ env.VPS_PATH }};
+        else
+          cd ${{ env.VPS_PATH }}/web001 && git pull;
+        fi"
+
+    - name: Build Docker Image on VPS
+      env:
+        VPS_USER: admin1
+        VPS_HOST: 172.105.148.166
+        VPS_PATH: /home/admin1/var/www/web001
+      run: |
+        ssh ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
+        cd ${{ env.VPS_PATH }} && 
+        npm install && 
+        npm run build && 
+        docker build -t web001:latest . &&
+        docker tag web001:latest localhost:5000/web001:latest &&
+        docker push localhost:5000/web001:latest"
+
+    - name: Notify Deployment Success
+      run: echo "Deployment operation was successful."
