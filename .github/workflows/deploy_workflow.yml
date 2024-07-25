@@ -35,7 +35,7 @@ jobs:
       env:
         VPS_USER: admin1
         VPS_HOST: 172.105.148.166
-        VPS_PATH: /home/admin1/var/www/web006
+        VPS_PATH: /home/admin1/var/www/testwebapp05a
       run: |
         ssh -o StrictHostKeyChecking=no ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
         cd ${{ env.VPS_PATH }} && 
