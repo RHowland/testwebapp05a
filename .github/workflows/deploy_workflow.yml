@@ -24,10 +24,11 @@ jobs:
         REPO_URL: https://github.com/RHowland/testwebapp05a
       run: |
         ssh -o StrictHostKeyChecking=no ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
-        if [ ! -d \"${{ env.VPS_PATH }}/web006\" ]; then
-          git clone ${{ env.REPO_URL }} ${{ env.VPS_PATH }};
+        if [ ! -d \"${{ env.VPS_PATH }}/testwebapp05a\" ]; then
+          git clone https://github.com/RHowland/web001.git /home/admin1/var/www;
+          # git clone ${{ env.REPO_URL }} ${{ env.VPS_PATH }};
         else
-          cd ${{ env.VPS_PATH }}/web006 && git pull;
+          cd ${{ env.VPS_PATH }}/testwebapp05a && git pull;
         fi"
 
     - name: Build Docker Image on VPS
