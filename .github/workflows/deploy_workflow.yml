@@ -23,7 +23,7 @@ jobs:
         VPS_PATH: /home/admin1/var/www
         REPO_URL: https://github.com/RHowland/testwebapp05a
       run: |
-        ssh ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
+        ssh -o StrictHostKeyChecking=no ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
         if [ ! -d \"${{ env.VPS_PATH }}/web006\" ]; then
           git clone ${{ env.REPO_URL }} ${{ env.VPS_PATH }};
         else
@@ -36,7 +36,7 @@ jobs:
         VPS_HOST: 172.105.148.166
         VPS_PATH: /home/admin1/var/www/web006
       run: |
-        ssh ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
+        ssh -o StrictHostKeyChecking=no ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
         cd ${{ env.VPS_PATH }} && 
         npm install && 
         npm run build && 
