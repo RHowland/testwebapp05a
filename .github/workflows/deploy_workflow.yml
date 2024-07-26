@@ -19,7 +19,7 @@ jobs:
     - name: Clone or Pull Repository on VPS
       env:
         VPS_USER: admin1
-        VPS_HOST: 172.105.148.166
+        VPS_HOST: 66.228.57.59
         VPS_PATH: /home/admin1/var/www
         REPO_URL: https://github.com/RHowland/testwebapp05a
       run: |
@@ -34,7 +34,7 @@ jobs:
     - name: Build Docker Image on VPS
       env:
         VPS_USER: admin1
-        VPS_HOST: 172.105.148.166
+        VPS_HOST: 66.228.57.59
         VPS_PATH: /home/admin1/var/www/testwebapp05a
       run: |
         ssh -o StrictHostKeyChecking=no ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
