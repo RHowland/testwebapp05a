@@ -39,8 +39,6 @@ jobs:
       run: |
         ssh -o StrictHostKeyChecking=no ${{ env.VPS_USER }}@${{ env.VPS_HOST }} "
         cd ${{ env.VPS_PATH }} && 
-        npm install && 
-        npm run build && 
         docker build -t web001:latest . &&
         docker tag web001:latest localhost:5000/web001:latest &&
         docker push localhost:5000/web001:latest"
